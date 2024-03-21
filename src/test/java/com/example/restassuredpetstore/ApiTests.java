@@ -19,7 +19,6 @@ public class ApiTests {
     @BeforeEach
     public void setUp() {
         RestAssured.baseURI = "https://petstore.swagger.io/v2/";
-
     }
     @Test
     public void petNotFound() {
@@ -61,7 +60,8 @@ public class ApiTests {
                 .log().all()
                 .assertThat()
                 .statusCode(200)
-                .body("id", equalTo(id));
+                .statusLine("HTTP/1.1 200 OK")
+                .body("id", equalTo(id), "name", equalTo("Ostin"));
     }
     @Test
     @DisplayName("Place order for a pet")
@@ -81,6 +81,7 @@ public class ApiTests {
                 .log().all()
                 .assertThat()
                 .statusCode(200)
-                .body("id", equalTo(id));
+                .body("id", equalTo(id))
+                .statusLine("HTTP/1.1 200 OK");
     }
 }
